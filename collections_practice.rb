@@ -1,48 +1,38 @@
 # your code goes here
-require 'pry'
- def begins_with_r(arr)
-    arr.all? do |string| 
-    string[0] == "r"
-  end
+def begins_with_r arr
+  arr.all? {|x| x.start_with? "r"}
 end
 
-def contain_a(arr)
-    arr.select do |string|
-    string.include?("a")
-  end
+def contain_a arr
+  arr.select {|x| x.include? 'a'}
 end
 
-def first_wa(arr)
-    arr.detect do |string|
-    string[0,2] == "wa"
-  end
+def first_wa arr
+  arr.find {|x| x.to_s.start_with? "wa"}
 end
 
 def remove_non_strings(arr)
-    arr.delete_if do |string| 
-    string.is_a?(String) == false
+  arr.select {|x| x.is_a? String}
+end
+
+def count_elements(arr)
+  arr.map{|x| x.merge({count: arr.count(x)}) if not x.key?(:count)}.uniq
+end
+
+def merge_data keys, data
+  keys.map {|x| x.merge(data[0][x[:first_name]])}
+end
+
+def find_cool(arr)
+  arr.select {|x| x[:temperature] == "cool"}
+end
+
+def organize_schools arr
+  ret = {}
+  arr.each do |name, loc_hash|
+    location = loc_hash[:location]
+    ret[location] ||= []
+    ret[location] << name
   end
+  ret
 end
-  # binding.pry  
-def count_elements(array)
-
-    array.uniq.each {|i| count = 0
-        array.each {|i2| if i2 == i then count += 1 end}
-        i[:count] = count}
-end
-
- def merge_data(keys, data)
-  merged = []
-  keys.each {|i| data.first.map {|k,v| if i.values[0] == k then merged << i.merge(v) end}}
-  merged
-end
-
-def find_cool(cool)
-    cool.select {|i| i.any? {|k,v| v == "cool"}} 
-end
-
-def organize_schools(schools)
-    locations_hash = {}
-    schools.collect {|k,v| locations_hash[v[:location]] = []}
-    locations_hash.each {|k,v| schools.each {|k1,v1| if k == v1[:location] then v << k1  end}}
-end 
